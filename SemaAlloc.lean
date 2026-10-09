@@ -3,10 +3,7 @@
 
   Main module for the Semaphore Allocation correctness proof.
 
-  This module re-exports all submodules for convenient importing.
+  Convenience entry point for the top-level bisimulation theorem.
 -/
 
-import SemaAlloc.BackwardSim
-import SemaAlloc.Impl
-import SemaAlloc.Spec
-import SemaAlloc.ForwardSim
+import SemaAlloc.Main

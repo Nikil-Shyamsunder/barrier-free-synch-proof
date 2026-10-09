@@ -10,4 +10,4 @@ require aesop from git
 @[default_target]
 lean_lib SemaAlloc where
   -- Library configuration
-  globs := #[.submodules `SemaAlloc]
+  globs := #[.andSubmodules `SemaAlloc]

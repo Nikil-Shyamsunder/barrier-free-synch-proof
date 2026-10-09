@@ -33,6 +33,7 @@ This code is being released solely for academic and scientific reproducibility p
   + `PerScopeForwardSim.lean`, `PerScopeBackwardSim.lean`, `PerScopeInvStep.lean`, and `PerScopeLemmas.lean`: supporting proof steps and lemmas
   + `PCBound.lean`: lemmas relating a program-counter position to its index in a scope's instruction list
   + `Utilities.lean`: shared helpers
+  + `WorkedExample.lean`: a two-engine, one-loop producer/consumer program and a concrete application of `perScope_bisimulation`
 
 ### Requirements
 
@@ -54,6 +55,11 @@ From the repository root (the directory containing `lakefile.lean`), run:
 
 1. `lake build`
 
+To run the source-integrity checks and print the axioms used by the two
+top-level results, run:
+
+1. `bash scripts/check-integrity.sh`
+
 - Tested on an Apple M1 Max and an Apple M3 Pro, both with at least 32 GB of RAM. `lake build` reports `Build completed successfully` with no errors and no warnings.
 
 ### What Is and Is Not Proved
@@ -64,6 +70,10 @@ The scope of the proof follows Sections 7.7 and 9 of the paper:
 - **Defined but not proved.** The per-instruction allocation (`PerInstrAlloc.lean`) is formalized because the per-loop allocation is presented as a refinement of it. As in the paper, only the per-loop allocation is proved.
 - **Not modeled.** The resource optimizations of Section 6 (per-engine allocation, LICM, CSE) are outside the scope of the formalization, as Section 9 notes.
 - **Trusted.** Section 7.7 lists the trusted assumptions: that the two transition systems faithfully model multi-engine execution, that the datapath, control, and allocation registers are disjoint, that `PerScopeAllocR` reflects the allocation of Section 5.5, and the syntactic hypotheses on the specification program.
+
+### Worked Example
+
+`SemaAlloc/WorkedExample.lean` defines a program with two engines sharing one loop. Engine `0` executes `I₀` and `I₁`; engine `1` executes `I₂`, which depends on `I₁` in the same loop iteration. The loop-entry and per-scope wait-value register operations are reminiscent of Figure 8. `WorkedExample.workedExample_bisimulation` instantiates `perScope_bisimulation` for this program. 
 
 Proof Artifact Structure
 ------------------------
